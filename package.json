@@ -1,0 +1,33 @@
+{
+  "name": "dc",
+  "version": "1.0.0",
+  "description": "c",
+  "main": "c",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -L index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "c"
+  },
+  "keywords": [
+    "c"
+  ],
+  "author": "c",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "connect-redis": "^7.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-session": "^1.17.3",
+    "helmet": "^7.1.0",
+    "mongoose": "^7.4.1",
+    "nodemon": "^3.0.1",
+    "redis": "^4.6.7"
+  }
+}
