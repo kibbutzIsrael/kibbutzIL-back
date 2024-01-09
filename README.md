@@ -1,6 +1,6 @@
-$ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+1. docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
-$ docker exec -it kigler-node-1 mongosh
+2. docker exec -it kigler-node-1 mongosh
 
 db.createUser({
   user: "1223d",
@@ -8,10 +8,10 @@ db.createUser({
   roles: ["root"]
 })
 
-exit
+3. exit
 
-$ docker-compose down
+4. docker-compose down
 
-$ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
+5. docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
 
