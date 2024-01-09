@@ -1,6 +1,6 @@
 1. docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
-2. docker exec -it kibbutzil-node-1 mongosh
+2. docker exec -it kibbutzil-back-node-1 mongosh
 
 db.createUser({
   user: "1223d",
@@ -17,6 +17,6 @@ db.createUser({
 
 
 
-# docker logs kibbutzil-node-app-1
+# docker logs kibbutzil-back-node-app-1
 
 
