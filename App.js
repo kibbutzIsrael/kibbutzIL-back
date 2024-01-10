@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const expressMongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
+const organizationRoutes = require('./routes/organizationRoutes'); 
 
 const allowedOrigins = [];
 //routers
@@ -20,6 +21,7 @@ app.use(
     })
   );
 // Routes
+app.use('/organizations', organizationRoutes);
 // app.use('/api/v1/users', usersRouter);
 app.get("/", (req, res) => {
     res.send("<h2>Hello, Alon Kigler and Mongo is the best!!!</h2>");
