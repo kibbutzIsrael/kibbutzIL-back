@@ -2,7 +2,7 @@
 
 2. docker exec -it kibbutzil-back-mongo-1 mongosh
 
-use Admin
+use admin
 
 db.createUser({
   user: "1223d",
