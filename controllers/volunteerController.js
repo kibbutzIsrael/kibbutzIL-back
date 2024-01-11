@@ -1,18 +1,44 @@
 const Volunteer = require("../models/volunteerModel");
+const multer = require('multer');
+const { nextTick } = require('process');
+//multer
+const multerStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+      cb(null, 'volunteers-CV')
+  },
+  filename: (req, file, cb) =>{
+      cb(null, `${req.body.email}-CV.pdf`);
+  }
+});
 
-const volunteerController = {
+const multerFilter = (req, file, cb) =>{
+  if(file.originalname.split('.')[1] === 'pdf'){
+      cb(null, true);
+  }
+  else{
+      cb(new AppError('Not a PDF file', 400), false);
+  }
+}
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFilter
+});
+
+exports.uploadCV = upload.single('CVfile');
+
+//controllers
   // GET method to retrieve all volunteers
-  async getAllVolunteers(req, res) {
+  exports.getAllVolunteers = async (req, res) => {
     try {
       const volunteers = await Volunteer.find();
       res.status(200).json(volunteers);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  },
+  };
 
   // GET method to retrieve a single volunteer by ID
-  async getVolunteerById(req, res) {
+  exports.getVolunteerById = async (req, res) => {
     try {
       const volunteer = await Volunteer.findById(req.params.id);
       if (volunteer) {
@@ -23,10 +49,11 @@ const volunteerController = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  },
+  };
 
   // POST method to create a new volunteer
-  async createVolunteer(req, res) {
+  exports.createVolunteer = async (req, res) => {
+    
     const volunteer = new Volunteer(req.body);
 
     try {
@@ -35,10 +62,10 @@ const volunteerController = {
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  },
+  };
 
   // PUT method to update an existing volunteer by ID
-  async updateVolunteer(req, res) {
+  exports.updateVolunteer = async (req, res) => {
     try {
       const volunteer = await Volunteer.findById(req.params.id);
       if (!volunteer) {
@@ -53,17 +80,17 @@ const volunteerController = {
       volunteer.positionAntilNow = req.body.positionAntilNow;
       volunteer.fecerPosition = req.body.fecerPosition;
       volunteer.yearExperience = req.body.yearExperience;
-      volunteer.PDF = req.body.PDF;
+      volunteer.CVfile = `${req.body.email}-CV.pdf`;
 
       const updatedVolunteer = await volunteer.save();
       res.status(200).json(updatedVolunteer);
     } catch (error) {
       res.status(400).json({ message: error.message });
     }
-  },
+  };
 
   // DELETE method to remove a volunteer by ID
-  async deleteVolunteer(req, res) {
+  exports.deleteVolunteer = async (req, res) => {
     try {
       const result = await Volunteer.findByIdAndDelete(req.params.id);
       if (result) {
@@ -74,7 +101,4 @@ const volunteerController = {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  },
-};
-
-module.exports = volunteerController;
+  };
