@@ -19,6 +19,6 @@ db.createUser({
 
 
 
-# docker logs kibbutzil-back-node-app-1
+
 
 
