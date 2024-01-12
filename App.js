@@ -5,6 +5,7 @@ const helmet = require("helmet");
 const organizationRoutes = require('./routes/organizationRoutes'); 
 const contactRoutes = require('./routes/contactRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
+const mailingListRoutes = require('./routes/mailingListRoutes')
 
 const allowedOrigins = [];
 //routers
@@ -27,6 +28,7 @@ app.use(
 app.use('/organizations', organizationRoutes);
 app.use('/contacts', contactRoutes);
 app.use('/volunteers', volunteerRoutes);
+app.use('/mailingList', mailingListRoutes);
 
 // app.use('/api/v1/users', usersRouter);
 app.get("/", (req, res) => {
