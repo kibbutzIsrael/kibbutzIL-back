@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const organizationController = require('../controllers/organizationController'); 
+const authController = require('../controllers/authController');
 
 /**
  * @swagger
@@ -172,7 +173,7 @@ router.post('/', organizationController.createOrganization);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put('/:id', organizationController.updateOrganization);
+router.put('/:id',authController.protect, authController.resrictTo('admin'), organizationController.updateOrganization);
 
 /**
  * @swagger
@@ -209,6 +210,6 @@ router.put('/:id', organizationController.updateOrganization);
  *               $ref: '#/components/schemas/ServerMessage'
  */
 // 
-router.delete('/:id', organizationController.deleteOrganization);
+router.delete('/:id',authController.protect, authController.resrictTo('admin'), organizationController.deleteOrganization);
 
 module.exports = router;

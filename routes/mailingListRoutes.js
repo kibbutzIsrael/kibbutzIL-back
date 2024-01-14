@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mailingListController = require('../controllers/mailingListController'); 
+const authController = require('../controllers/authController');
 
 /**
  * @swagger
@@ -152,7 +153,7 @@ router.post('/', mailingListController.addMail);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put('/:id', mailingListController.updateMail);
+router.put('/:id',authController.protect, authController.resrictTo('admin'), mailingListController.updateMail);
 
 
 /**
@@ -189,6 +190,6 @@ router.put('/:id', mailingListController.updateMail);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.delete('/:id', mailingListController.deleteMail);
+router.delete('/:id',authController.protect, authController.resrictTo('admin'), mailingListController.deleteMail);
 
 module.exports = router;
