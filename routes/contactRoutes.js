@@ -30,7 +30,7 @@ const contactController = require("../controllers/contactController");
  *       properties:
  *         message: string
  *       example:
- *         message: Server message text about success or falure
+ *         message: Server message text about failure (or success)
  */
 
 /**
@@ -83,6 +83,13 @@ router.get("/", contactController.getAllContacts);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
+ * 
+ *       500:
+ *         description: The contact is not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ServerMessage'
  */
 router.get("/:id", contactController.getContactById);
 
@@ -92,8 +99,12 @@ router.get("/:id", contactController.getContactById);
  *   post:
  *     summary: ADD new contact
  *     tags: [Contacts]
- *     parameters:
- *         required: true
+ *     requestBody:
+ *      required: true
+ *      content:
+ *       application/json:
+ *          schema:
+ *            $ref: '#/components/schemas/Contact'
  *     responses:
  *       201:
  *         description: The contact is created
@@ -101,7 +112,7 @@ router.get("/:id", contactController.getContactById);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Contact'
- *       404:
+ *       400:
  *         description: The contact is not created
  *         content:
  *           application/json:
@@ -136,7 +147,7 @@ router.post("/", contactController.createContact);
  *          application/json:
  *             schema:
  *               $ref: '#/components/schemas/Contact'
- *      404:
+ *      400:
  *        description: The contact was not found
  *        content:
  *           application/json:
@@ -174,6 +185,12 @@ router.put("/:id", contactController.updateContact);
  *               $ref: '#/components/schemas/ServerMessage'
  *       404:
  *         description: The contact was not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ServerMessage'
+ *       500:
+ *         description: The contact is not deleted
  *         content:
  *           application/json:
  *             schema:
