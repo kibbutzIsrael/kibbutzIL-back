@@ -30,7 +30,7 @@ const mailingListController = {
   // POST method to add new mail to the mailing list
   async addMail(req, res) {
     const mail = new MailingList({
-      email: req.body.organizationEmail//todo:check name
+      email: req.body.ListEmail
     });
 
     try {
@@ -63,12 +63,12 @@ const mailingListController = {
   // DELETE method to delete an organization
   async deleteMail(req, res) {
     try {
-      const mail = await MailingList.findById(req.params.id);
-      if (mail) {
-        await mail.remove();
-        res.status(200).json({ message: "Mail deleted successfully" });
+      const result = await MailingList.findByIdAndDelete(req.params.id);
+
+      if (result) {
+        res.status(200).json({ message: "Organization deleted successfully" });
       } else {
-        res.status(404).json({ message: "Mail not found" });
+        res.status(404).json({ message: "Organization not found" });
       }
     } catch (error) {
       res.status(500).json({ message: error.message });
