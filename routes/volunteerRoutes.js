@@ -1,41 +1,43 @@
 const express = require('express');
 const router = express.Router();
-const organizationController = require('../controllers/organizationController'); 
+const volunteerController = require('../controllers/volunteerController'); 
 
 /**
  * @swagger
  * tags:
- *   name: Organizations
+ *   name: Volunteers
  * components:
  *   schemas:
- *     Organization:
- *       required:
- *         - organizationName
- *         - organizationPhoneNumber
- *         - organizationContactName
- *         - organizationEmail
- *         - organizationMessageBody
- *         - organizationType
+ *     Volunteer:
  *       properties:
- *         organizationName:
+ *         fullName:
  *           type: string
- *         organizationPhoneNumber:
+ *         email:
  *           type: string
- *         organizationContactName:
+ *         location:
  *           type: string
- *         organizationEmail:
+ *         phoneNumber:
  *           type: string
- *         organizationMessageBody:
+ *         gender:
  *           type: string
- *         organizationType:
+ *         positionUntilNow:
+ *           type: string
+ *         fecerPosition:
+ *           type: string
+ *         yearExperience:
+ *           type: string
+ *         PDF:
  *           type: string
  *       example:
- *         organizationName: Super-name
- *         organizationPhoneNumber: 05890847634
- *         organizationContactName: Name Surname
- *         organizationEmail: organization@email.com
- *         organizationMessageBody: Hi, organization!
- *         organizationType: medium
+ *         fullName: Volunteer Volunteer
+ *         email: volunteer@email.com
+ *         location: Center
+ *         phoneNumber: 0485858855
+ *         gender: male
+ *         positionUntilNow: Position name
+ *         fecerPosition: Position name
+ *         yearExperience: 10
+ *         PDF: link-to-the-bucket.com
  *
  *     ServerMessage:
  *       required:
@@ -47,120 +49,120 @@ const organizationController = require('../controllers/organizationController');
 
 /**
  * @swagger
- * /organizations:
+ * /volunteers:
  *   get:
- *     summary: GET all organizations
- *     tags: [Organizations]
+ *     summary: GET all volunteers
+ *     tags: [Volunteers]
  *     responses:
  *       200:
- *         description: The list of the organizations
+ *         description: The list of the volunteers
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Organization'
+ *                 $ref: '#/components/schemas/Volunteer'
  *       500:
- *          description: The list of the organizations is not found
+ *          description: The list of the volunteers is not found
  *          content:
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/', organizationController.getAllOrganizations);
+router.get('/', volunteerController.getAllVolunteers);
 
 /**
  * @swagger
- *  /organizations/{id}:
+ *  /volunteers/{id}:
  *   get:
- *     summary: GET an organization by ID
- *     tags: [Organizations]
+ *     summary: GET a volunteer by ID
+ *     tags: [Volunteers]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The organization id
+ *         description: The contact id
  *     responses:
  *       200:
- *         description: The organization response by id
+ *         description: The volunteer response by id
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Organization'
+ *               $ref: '#/components/schemas/Volunteer'
  *       404:
- *         description: The organization was not found
+ *         description: The voluteer was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  * 
  *       500:
- *         description: The organization is not found
+ *         description: The voluteer is not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/:id', organizationController.getOrganizationById);
+router.get('/:id', volunteerController.getVolunteerById);
 
 /**
  * @swagger
- * /organizations:
+ * /volunteers:
  *   post:
- *     summary: POST a new organization
- *     tags: [Organizations]
+ *     summary: POST a new volunteer
+ *     tags: [Volunteers]
  *     requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Organization'
+ *            $ref: '#/components/schemas/Volunteer'
  *     responses:
  *       201:
- *         description: The organization is created
+ *         description: The volunteer is created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Organization'
+ *               $ref: '#/components/schemas/Volunteer'
  *       400:
- *         description: The organization is not created
+ *         description: The volunteer is not created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
- */
-router.post('/', organizationController.createOrganization);
+ */ 
+router.post('/', volunteerController.createVolunteer);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /volunteers/{id}:
  *   put:
- *    summary: PUT (update) an organization by ID
- *    tags: [Organizations]
+ *    summary: PUT (update) a volunteer by ID
+ *    tags: [Volunteers]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The organization id
+ *        description: The volunteer id
  *    requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Organization'
+ *            $ref: '#/components/schemas/Volunteer'
  *    responses:
  *      200:
- *        description: The organization was updated
+ *        description: The volunteer was updated
  *        content:
  *          application/json:
  *             schema:
- *               $ref: '#/components/schemas/Contact'
+ *               $ref: '#/components/schemas/Volunteer'
  *      400:
- *        description: The organization was not found
+ *        description: The volunteer was not found
  *        content:
  *           application/json:
  *             schema:
@@ -172,43 +174,42 @@ router.post('/', organizationController.createOrganization);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put('/:id', organizationController.updateOrganization);
+router.put('/:id', volunteerController.updateVolunteer);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /volunteers/{id}:
  *  delete:
- *     summary: DELETE an organization by ID
- *     tags: [Organizations]
+ *     summary: DELETE a volunteer by ID
+ *     tags: [Volunteers]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The organization id
+ *         description: The volunteer id
  *
  *     responses:
  *       200:
- *         description: The organization was deleted
+ *         description: The volunteer was deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       404:
- *         description: The organization was not found
+ *         description: The volunteer was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       500:
- *         description: The organization is not deleted
+ *         description: The volunteer is not deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
- */
-// 
-router.delete('/:id', organizationController.deleteOrganization);
+ */ 
+router.delete('/:id', volunteerController.deleteVolunteer);
 
 module.exports = router;

@@ -1,41 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const organizationController = require('../controllers/organizationController'); 
+const mailingListController = require('../controllers/mailingListController'); 
 
 /**
  * @swagger
  * tags:
- *   name: Organizations
+ *   name: Mailing
  * components:
  *   schemas:
- *     Organization:
+ *     MailingList:
  *       required:
- *         - organizationName
- *         - organizationPhoneNumber
- *         - organizationContactName
- *         - organizationEmail
- *         - organizationMessageBody
- *         - organizationType
+ *         - email
  *       properties:
- *         organizationName:
- *           type: string
- *         organizationPhoneNumber:
- *           type: string
- *         organizationContactName:
- *           type: string
- *         organizationEmail:
- *           type: string
- *         organizationMessageBody:
- *           type: string
- *         organizationType:
+ *         email:
  *           type: string
  *       example:
- *         organizationName: Super-name
- *         organizationPhoneNumber: 05890847634
- *         organizationContactName: Name Surname
- *         organizationEmail: organization@email.com
- *         organizationMessageBody: Hi, organization!
- *         organizationType: medium
+ *         email: volunteer@email.com
  *
  *     ServerMessage:
  *       required:
@@ -47,120 +27,120 @@ const organizationController = require('../controllers/organizationController');
 
 /**
  * @swagger
- * /organizations:
+ * /mailingList:
  *   get:
- *     summary: GET all organizations
- *     tags: [Organizations]
+ *     summary: GET all mails
+ *     tags: [Mailing]
  *     responses:
  *       200:
- *         description: The list of the organizations
+ *         description: The list of the mails
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Organization'
+ *                 $ref: '#/components/schemas/MailingList'
  *       500:
- *          description: The list of the organizations is not found
+ *          description: The list of the emails is not found
  *          content:
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/', organizationController.getAllOrganizations);
+router.get('/', mailingListController.getAllMails);
 
 /**
  * @swagger
- *  /organizations/{id}:
+ *  /mailingList/{id}:
  *   get:
- *     summary: GET an organization by ID
- *     tags: [Organizations]
+ *     summary: GET an mail by ID
+ *     tags: [Mailing]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The organization id
+ *         description: The email id
  *     responses:
  *       200:
- *         description: The organization response by id
+ *         description: The email response by id
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Organization'
+ *               $ref: '#/components/schemas/MailingList'
  *       404:
- *         description: The organization was not found
+ *         description: The email was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  * 
  *       500:
- *         description: The organization is not found
+ *         description: The email is not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/:id', organizationController.getOrganizationById);
+router.get('/:id', mailingListController.getMailById);
 
 /**
  * @swagger
- * /organizations:
+ * /mailingList:
  *   post:
- *     summary: POST a new organization
- *     tags: [Organizations]
+ *     summary: POST a new mail
+ *     tags: [Mailing]
  *     requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Organization'
+ *            $ref: '#/components/schemas/MailingList'
  *     responses:
  *       201:
- *         description: The organization is created
+ *         description: The email is created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Organization'
+ *               $ref: '#/components/schemas/MailingList'
  *       400:
- *         description: The organization is not created
+ *         description: The email is not created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.post('/', organizationController.createOrganization);
+router.post('/', mailingListController.addMail);
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /mailingList/{id}:
  *   put:
- *    summary: PUT (update) an organization by ID
- *    tags: [Organizations]
+ *    summary: PUT (update) an mail by ID
+*    tags: [Mailing]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The organization id
+ *        description: The email id
  *    requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Organization'
+ *            $ref: '#/components/schemas/MailingList'
  *    responses:
  *      200:
- *        description: The organization was updated
+ *        description: The email was updated
  *        content:
  *          application/json:
  *             schema:
- *               $ref: '#/components/schemas/Contact'
+ *               $ref: '#/components/schemas/MailingList'
  *      400:
- *        description: The organization was not found
+ *        description: The email was not found
  *        content:
  *           application/json:
  *             schema:
@@ -172,43 +152,43 @@ router.post('/', organizationController.createOrganization);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put('/:id', organizationController.updateOrganization);
+router.put('/:id', mailingListController.updateMail);
+
 
 /**
  * @swagger
- * /organizations/{id}:
+ * /mailingList/{id}:
  *  delete:
- *     summary: DELETE an organization by ID
- *     tags: [Organizations]
+ *     summary: DELETE an mail by ID
+ *     tags: [Mailing]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The organization id
+ *         description: The email id
  *
  *     responses:
  *       200:
- *         description: The organization was deleted
+ *         description: The email was deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       404:
- *         description: The organization was not found
+ *         description: The email was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       500:
- *         description: The organization is not deleted
+ *         description: The email is not deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-// 
-router.delete('/:id', organizationController.deleteOrganization);
+router.delete('/:id', mailingListController.deleteMail);
 
 module.exports = router;

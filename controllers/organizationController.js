@@ -66,9 +66,9 @@ const organizationController = {
   // DELETE method to delete an organization
   async deleteOrganization(req, res) {
     try {
-      const organization = await Organization.findById(req.params.id);
-      if (organization) {
-        await organization.remove();
+      const result = await Organization.findByIdAndDelete(req.params.id);
+
+      if (result) {
         res.status(200).json({ message: "Organization deleted successfully" });
       } else {
         res.status(404).json({ message: "Organization not found" });
