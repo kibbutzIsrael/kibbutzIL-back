@@ -11,6 +11,7 @@ const volunteerSchema = new mongoose.Schema({
         required: [true, 'No Email provided'],
         unique: true,
         lowercase: true,
+        validate: [validator.isEmail, 'Please provide a valid Email']
     },
     location: String,
     phoneNumber: String,

@@ -19,4 +19,4 @@ db.createUser({
 
 # docker logs kibbutzil-back-node-app-1
 
-
+Swagger API Documentation: [localhost:3000/api](http://localhost:3000/api)
