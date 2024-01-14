@@ -30,7 +30,7 @@ const mailingListController = {
   // POST method to add new mail to the mailing list
   async addMail(req, res) {
     const mail = new MailingList({
-      email: req.body.organizationEmail//todo:check name
+      email: req.body.ListEmail
     });
 
     try {
