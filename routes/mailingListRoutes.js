@@ -118,7 +118,7 @@ router.post('/', mailingListController.addMail);
  * /mailingList/{id}:
  *   put:
  *    summary: PUT (update) an mail by ID
- *    tags: [Mailing]
+*    tags: [Mailing]
  *    parameters:
  *      - in: path
  *        name: id
