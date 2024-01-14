@@ -30,7 +30,25 @@ const userScheme = new mongoose.Schema({
                 return el === this.password;
             }
         }
+    },
+    location: {
+        type: String
+    },
+    phoneNumber: {
+        type: Number
+    },
+    gender: {
+        type: String
+    },
+    positionUntilNow: {
+        type: String
+    },
+    fecerPosition: {
+        type: String
     }
+// yearExperience
+// linkdin
+
 });
 
 //encrypt pass in db

@@ -23,11 +23,11 @@ app.use(
   })
 );
 
-app.use(
-  "/api",
-  swaggerUi.serve,
-  swaggerUi.setup(specs, { explorer: true })
-);
+// app.use(
+//   "/api",
+//   swaggerUi.serve,
+//   swaggerUi.setup(specs, { explorer: true })
+// );
 
 // Routes
 app.use('/organizations', organizationRoutes);
@@ -38,6 +38,16 @@ app.use('/users', usersRouter);
 app.get("/", (req, res) => {
   res.send("<h2>Hello, Alon Kigler and Mongo is the best!!!</h2>");
 });
+// app.get('/single',function(req,res) {
+//   console.log('single file');
+   
+//   // Download function provided by express
+//   res.download('volunteers-CV/Rotemh123@gmail.com-CV.pdf', function(err) {
+//       if(err) {
+//           console.log(err);
+//       }
+//   })
+// })
 
 
 module.exports = app;
