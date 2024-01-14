@@ -8,7 +8,7 @@ router.get('/', volunteerController.getAllVolunteers);
 router.get('/:id', volunteerController.getVolunteerById);
 
 // POST a new volunteer
-router.post('/',volunteerController.uploadCV, volunteerController.createVolunteer);
+router.post('/', volunteerController.uploadCV, volunteerController.createVolunteer);
 
 // PUT (update) a volunteer by ID
 router.put('/:id', volunteerController.updateVolunteer);
