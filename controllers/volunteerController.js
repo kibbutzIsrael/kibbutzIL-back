@@ -110,7 +110,7 @@ exports.uploadCV = upload.single('CVfile');
       if (volunteer) {
         res.download(`volunteers-CV/${volunteer.email}-CV.pdf`, function(err) {
           if(err) {
-              console.log(err);
+            res.status(500).json({ message: err.message });
           }
       })
       } else {
