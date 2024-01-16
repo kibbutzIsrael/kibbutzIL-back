@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const contactController = require("../controllers/contactController");
+const authController = require('../controllers/authController');
 
 /**
  * @swagger
@@ -160,7 +161,7 @@ router.post("/", contactController.createContact);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put("/:id", contactController.updateContact);
+router.put("/:id",authController.protect, authController.resrictTo('admin'), contactController.updateContact);
 
 /**
  * @swagger
@@ -196,6 +197,6 @@ router.put("/:id", contactController.updateContact);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.delete("/:id", contactController.deleteContact);
+router.delete("/:id",authController.protect, authController.resrictTo('admin'), contactController.deleteContact);
 
 module.exports = router;

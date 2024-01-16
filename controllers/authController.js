@@ -1,3 +1,4 @@
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
@@ -32,11 +33,18 @@ const createSendToken = (user, statusCode, res) => {
 //signup new user and response JWT token signed for it as cookie
 exports.signup = catchAsync( async (req, res, next) => {
     const newUser = await User.create({
-        name: req.body.name,
+        fullName: req.body.fullName,
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
-        role: req.body.role
+        role: req.body.role,
+        location: req.body.location,
+        phoneNumber: req.body.phoneNumber,
+        gender: req.body.gender,
+        positionUntilNow: req.body.positionUntilNow,
+        targetPosition: req.body.targetPosition,
+        yearExperience: req.body.yearExperience,
+        linkdin: req.body.linkdin
     });
     createSendToken(newUser,201,res);
 });

@@ -102,3 +102,21 @@ exports.uploadCV = upload.single('CVfile');
       res.status(500).json({ message: error.message });
     }
   };
+
+  //GET method to download volunteer CV file
+  exports.getVolunteerCVById = async (req, res) => {
+    try {
+      const volunteer = await Volunteer.findById(req.params.id);
+      if (volunteer) {
+        res.download(`volunteers-CV/${volunteer.email}-CV.pdf`, function(err) {
+          if(err) {
+              console.log(err);
+          }
+      })
+      } else {
+        res.status(404).json({ message: "Volunteer not found" });
+      }
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  };

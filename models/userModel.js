@@ -1,20 +1,23 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 const bcrypt = require('bcryptjs');
 
 const userScheme = new mongoose.Schema({
 
-    name: {
+    fullName: {
         type: String,
         required: [true, 'no Username']
     },
 
     email: {
         type: String,
-        required: [true, 'no email']
+        required: [true, 'no email'],
+        validate: [validator.isEmail, 'Not a valid email']
     },
     role: {
         type: String,
         enum: ['user', 'admin'],
+        default: 'user'
     },
     password: {
         type: String,
@@ -30,7 +33,31 @@ const userScheme = new mongoose.Schema({
                 return el === this.password;
             }
         }
+    },
+    location: {
+        type: String
+    },
+    phoneNumber: {
+        type: Number,
+        required: [true, 'No phone number']
+    },
+    gender: {
+        type: String
+    },
+    positionUntilNow: {
+        type: String
+    },
+    targetPosition: {
+        type: String
+    },
+    yearExperience: {
+        type: Number
+    },
+    linkdin: {
+        type: String,
+        validate: [validator.isURL, 'Not a valid URL']
     }
+
 });
 
 //encrypt pass in db

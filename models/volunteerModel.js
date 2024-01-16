@@ -19,7 +19,7 @@ const volunteerSchema = new mongoose.Schema({
     positionUntilNow: String,
     fecerPosition: String, 
     yearExperience: String,
-    CVfile: String
+    CVfile: Buffer
 });
 
 const Volunteer = mongoose.model('Volunteer', volunteerSchema);
