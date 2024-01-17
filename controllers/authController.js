@@ -104,7 +104,6 @@ exports.protect = catchAsync( async (req, res, next) => {
 //resricts routes to admin user only
 exports.resrictTo = (...roles) =>{
     return(req, res, next) =>{
-        console.log(req.user.role);
         if(!roles.includes(req.user.role)){
             return next(new AppError('no premission', 403));
         }
