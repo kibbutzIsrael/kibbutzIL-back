@@ -13,6 +13,17 @@ const mailingListController = {
     }
   },
 
+    // GET method to retrieve all the mails as a list
+    async getListMails(req, res) {
+      console.log("all mails");
+      try {
+        const mails = await MailingList.find();
+        res.status(200).json(mails.map(email => email.email));
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
+    },
+
   // GET method to retrieve a mail by ID
   async getMailById(req, res) {
     try {

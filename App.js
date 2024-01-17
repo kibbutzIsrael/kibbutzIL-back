@@ -13,6 +13,7 @@ const contactRoutes = require('./routes/contactRoutes');
 const volunteerRoutes = require('./routes/volunteerRoutes');
 const usersRouter = require('./routes/userRoutes');
 const maillistRouter = require('./routes/mailingListRoutes');
+const emailRoutes = require('./routes/emailRoutes');
 
 const swaggerUi = require("swagger-ui-express");
 const specs = require("./config/swagger");
@@ -39,6 +40,7 @@ app.use('/contacts', contactRoutes);
 app.use('/volunteers', volunteerRoutes);
 app.use('/users', usersRouter);
 app.use('/emaillist', maillistRouter);
+app.use('/email-sender', emailRoutes);
 
 app.get("/", (req, res) => {
   res.send("<h2>Hello, Alon Kigler and Mongo is the best!!!</h2>");

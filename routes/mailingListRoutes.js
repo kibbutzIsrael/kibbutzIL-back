@@ -49,6 +49,7 @@ const authController = require('../controllers/authController');
  *                $ref: '#/components/schemas/ServerMessage'
  */
 router.get('/', mailingListController.getAllMails);
+router.get('/getlistmails', mailingListController.getListMails);
 
 /**
  * @swagger
