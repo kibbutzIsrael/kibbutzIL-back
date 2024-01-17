@@ -37,7 +37,7 @@ function setupEmailScheduler() {
 function sendTestEmail() {
   const mailOptions = {
     from: 'kibbutz-il@gmail.com',
-    to: 'shaharfar16@gmail.com',
+    to: 'shahar@gmail.com',
     subject: 'I would like to test this',
     text: 'This is a test email from the email sending.'
   };
