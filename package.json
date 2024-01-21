@@ -5,7 +5,8 @@
   "main": "c",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -L index.js"
+    "dev": "nodemon -L index.js",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -37,5 +38,13 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "validator": "^13.11.0"
+  },
+  "devDependencies": {
+    "supertest": "^6.3.4",
+    "vitest": "^1.2.1"
+  },
+  "vitest": {
+    "globals": true,
+    "environment": "node"
   }
 }
