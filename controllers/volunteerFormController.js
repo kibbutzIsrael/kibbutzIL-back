@@ -1,4 +1,4 @@
-const Volunteer = require("../models/volunteerModel");
+const VolunteerForm = require("../models/volunteerFormModel");
 const multer = require('multer');
 const { nextTick } = require('process');
 //multer
@@ -30,7 +30,7 @@ exports.uploadCV = upload.single('CVfile');
   // GET method to retrieve all volunteers
   exports.getAllVolunteers = async (req, res) => {
     try {
-      const volunteers = await Volunteer.find();
+      const volunteers = await VolunteerForm.find();
       res.status(200).json(volunteers);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -40,7 +40,7 @@ exports.uploadCV = upload.single('CVfile');
   // GET method to retrieve a single volunteer by ID
   exports.getVolunteerById = async (req, res) => {
     try {
-      const volunteer = await Volunteer.findById(req.params.id);
+      const volunteer = await VolunteerForm.findById(req.params.id);
       if (volunteer) {
         res.status(200).json(volunteer);
       } else {
@@ -54,7 +54,7 @@ exports.uploadCV = upload.single('CVfile');
   // POST method to create a new volunteer
   exports.createVolunteer = async (req, res) => {
     
-    const volunteer = new Volunteer(req.body);
+    const volunteer = new VolunteerForm(req.body);
 
     try {
       const newVolunteer = await volunteer.save();
@@ -67,7 +67,7 @@ exports.uploadCV = upload.single('CVfile');
   // PUT method to update an existing volunteer by ID
   exports.updateVolunteer = async (req, res) => {
     try {
-      const volunteer = await Volunteer.findById(req.params.id);
+      const volunteer = await VolunteerForm.findById(req.params.id);
       if (!volunteer) {
         return res.status(404).json({ message: "Volunteer not found" });
       }
@@ -92,7 +92,7 @@ exports.uploadCV = upload.single('CVfile');
   // DELETE method to remove a volunteer by ID
   exports.deleteVolunteer = async (req, res) => {
     try {
-      const result = await Volunteer.findByIdAndDelete(req.params.id);
+      const result = await VolunteerForm.findByIdAndDelete(req.params.id);
       if (result) {
         res.status(200).json({ message: "Volunteer deleted successfully" });
       } else {
@@ -106,7 +106,7 @@ exports.uploadCV = upload.single('CVfile');
   //GET method to download volunteer CV file
   exports.getVolunteerCVById = async (req, res) => {
     try {
-      const volunteer = await Volunteer.findById(req.params.id);
+      const volunteer = await VolunteerForm.findById(req.params.id);
       if (volunteer) {
         res.download(`volunteers-CV/${volunteer.email}-CV.pdf`, function(err) {
           if(err) {

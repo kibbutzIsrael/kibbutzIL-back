@@ -8,9 +8,10 @@ const app = express();
 const allowedOrigins = [];
 
 //routers
-const organizationRoutes = require('./routes/organizationRoutes'); 
-const contactRoutes = require('./routes/contactRoutes');
-const volunteerRoutes = require('./routes/volunteerRoutes');
+const organizationFormRoutes = require('./routes/organizationFormRoutes'); 
+const organizationRoutes = require('./routes/organizationRoutes')
+const contactFormRoutes = require('./routes/contactFormRoutes');
+const volunteerFormRoutes = require('./routes/volunteerFormRoutes');
 const usersRouter = require('./routes/userRoutes');
 const maillistRouter = require('./routes/mailingListRoutes');
 const emailRoutes = require('./routes/emailRoutes');
@@ -35,9 +36,10 @@ app.use(
 );
 
 // Routes
+app.use('/organizations-forms', organizationFormRoutes);
 app.use('/organizations', organizationRoutes);
-app.use('/contacts', contactRoutes);
-app.use('/volunteers', volunteerRoutes);
+app.use('/contacts-forms', contactFormRoutes);
+app.use('/volunteers-forms', volunteerFormRoutes);
 app.use('/users', usersRouter);
 app.use('/emaillist', maillistRouter);
 app.use('/email-sender', emailRoutes);

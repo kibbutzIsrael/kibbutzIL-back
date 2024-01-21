@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-const volunteerSchema = new mongoose.Schema({
+const volunteerFormSchema = new mongoose.Schema({
     fullName: {
         type: String,
         required: [true, 'No name provided'] 
@@ -22,6 +22,6 @@ const volunteerSchema = new mongoose.Schema({
     CVfile: Buffer
 });
 
-const Volunteer = mongoose.model('Volunteer', volunteerSchema);
+const VolunteerForm = mongoose.model('VolunteerForm', volunteerFormSchema);
 
-module.exports = Volunteer;
+module.exports = VolunteerForm;
