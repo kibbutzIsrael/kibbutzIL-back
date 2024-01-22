@@ -81,6 +81,7 @@ exports.uploadCV = upload.single('CVfile');
       volunteer.fecerPosition = req.body.fecerPosition;
       volunteer.yearExperience = req.body.yearExperience;
       volunteer.CVfile = `${req.body.email}-CV.pdf`;
+      volunteer.linkedin = req.body.linkedin;
 
       const updatedVolunteer = await volunteer.save();
       res.status(200).json(updatedVolunteer);

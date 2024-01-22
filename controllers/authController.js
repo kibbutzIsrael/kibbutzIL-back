@@ -33,7 +33,8 @@ const createSendToken = (user, statusCode, res) => {
 //signup new user and response JWT token signed for it as cookie
 exports.signup = catchAsync( async (req, res, next) => {
     const newUser = await User.create({
-        fullName: req.body.fullName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
