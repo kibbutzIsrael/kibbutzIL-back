@@ -1,30 +1,42 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const contactController = require("../controllers/contactController");
+const organizationFormController = require('../controllers/organizationFormController'); 
 const authController = require('../controllers/authController');
 
 /**
  * @swagger
  * tags:
- *   name: Contacts
+ *   name: Organizations
  * components:
  *   schemas:
- *     Contact:
+ *     Organization:
  *       required:
- *         - contactName
- *         - contactEmail
- *         - contactMessageBody
+ *         - organizationName
+ *         - organizationPhoneNumber
+ *         - organizationContactName
+ *         - organizationEmail
+ *         - organizationMessageBody
+ *         - organizationType
  *       properties:
- *         contactName:
+ *         organizationName:
  *           type: string
- *         contactEmail:
+ *         organizationPhoneNumber:
  *           type: string
- *         contactMessageBody:
+ *         organizationContactName:
+ *           type: string
+ *         organizationEmail:
+ *           type: string
+ *         organizationMessageBody:
+ *           type: string
+ *         organizationType:
  *           type: string
  *       example:
- *         contactName: Volunteer's Name
- *         contactEmail: Volunteer@email.com
- *         contactMessageBody: Hi, Volunteer!
+ *         organizationName: Super-name
+ *         organizationPhoneNumber: 05890847634
+ *         organizationContactName: Name Surname
+ *         organizationEmail: organization@email.com
+ *         organizationMessageBody: Hi, organization!
+ *         organizationType: medium
  *
  *     ServerMessage:
  *       required:
@@ -36,120 +48,120 @@ const authController = require('../controllers/authController');
 
 /**
  * @swagger
- * /contacts:
+ * /organizations:
  *   get:
- *     summary: GET all contacts
- *     tags: [Contacts]
+ *     summary: GET all organizations
+ *     tags: [Organizations]
  *     responses:
  *       200:
- *         description: The list of the contacts
+ *         description: The list of the organizations
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Contact'
+ *                 $ref: '#/components/schemas/Organization'
  *       500:
- *          description: The list of the contacts is not found
+ *          description: The list of the organizations is not found
  *          content:
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get("/", contactController.getAllContacts);
+router.get('/', organizationFormController.getAllOrganizations);
 
 /**
  * @swagger
- *  /contacts/{id}:
+ *  /organizations/{id}:
  *   get:
- *     summary: GET the contact by id
- *     tags: [Contacts]
+ *     summary: GET an organization by ID
+ *     tags: [Organizations]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The contact id
+ *         description: The organization id
  *     responses:
  *       200:
- *         description: The contact response by id
+ *         description: The organization response by id
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Contact'
+ *               $ref: '#/components/schemas/Organization'
  *       404:
- *         description: The contact was not found
+ *         description: The organization was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  * 
  *       500:
- *         description: The contact is not found
+ *         description: The organization is not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get("/:id", contactController.getContactById);
+router.get('/:id', organizationFormController.getOrganizationById);
 
 /**
  * @swagger
- * /contacts:
+ * /organizations:
  *   post:
- *     summary: ADD new contact
- *     tags: [Contacts]
+ *     summary: POST a new organization
+ *     tags: [Organizations]
  *     requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Contact'
+ *            $ref: '#/components/schemas/Organization'
  *     responses:
  *       201:
- *         description: The contact is created
+ *         description: The organization is created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Contact'
+ *               $ref: '#/components/schemas/Organization'
  *       400:
- *         description: The contact is not created
+ *         description: The organization is not created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.post("/", contactController.createContact);
+router.post('/', organizationFormController.createOrganization);
 
 /**
  * @swagger
- * /contacts/{id}:
+ * /organizations/{id}:
  *   put:
- *    summary: PUT (update) a contact by ID
- *    tags: [Contacts]
+ *    summary: PUT (update) an organization by ID
+ *    tags: [Organizations]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The Contact id
+ *        description: The organization id
  *    requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/Contact'
+ *            $ref: '#/components/schemas/Organization'
  *    responses:
  *      200:
- *        description: The contact was updated
+ *        description: The organization was updated
  *        content:
  *          application/json:
  *             schema:
  *               $ref: '#/components/schemas/Contact'
  *      400:
- *        description: The contact was not found
+ *        description: The organization was not found
  *        content:
  *           application/json:
  *             schema:
@@ -161,42 +173,43 @@ router.post("/", contactController.createContact);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put("/:id",authController.protect, authController.resrictTo('admin'), contactController.updateContact);
+router.put('/:id',authController.protect, authController.resrictTo('admin'), organizationFormController.updateOrganization);
 
 /**
  * @swagger
- * /contacts/{id}:
+ * /organizations/{id}:
  *  delete:
- *     summary: DELETE a contact by ID
- *     tags: [Contacts]
+ *     summary: DELETE an organization by ID
+ *     tags: [Organizations]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The contact id
+ *         description: The organization id
  *
  *     responses:
  *       200:
- *         description: The contact was deleted
+ *         description: The organization was deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       404:
- *         description: The contact was not found
+ *         description: The organization was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       500:
- *         description: The contact is not deleted
+ *         description: The organization is not deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.delete("/:id",authController.protect, authController.resrictTo('admin'), contactController.deleteContact);
+// 
+router.delete('/:id',authController.protect, authController.resrictTo('admin'), organizationFormController.deleteOrganization);
 
 module.exports = router;

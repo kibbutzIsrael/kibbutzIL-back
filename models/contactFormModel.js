@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const contactSchema = new mongoose.Schema({
+const contactFormSchema = new mongoose.Schema({
     contactName: {
         type: String,
         required: true
@@ -15,6 +15,6 @@ const contactSchema = new mongoose.Schema({
     }
 });
 
-const Contact = mongoose.model('Contact', contactSchema);
+const ContactForm = mongoose.model('ContactForm', contactFormSchema);
 
-module.exports = Contact;
+module.exports = ContactForm;
