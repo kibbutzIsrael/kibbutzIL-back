@@ -3,7 +3,10 @@ const cors = require("cors");
 const expressMongoSanitize = require("express-mongo-sanitize");
 const helmet = require("helmet");
 const app = express();
-
+const swaggerUi = require("swagger-ui-express");
+const specs = require("./config/swagger");
+const xss = require('xss-clean');
+const hpp = require('hpp');
 
 const allowedOrigins = [];
 
@@ -16,12 +19,17 @@ const usersRouter = require('./routes/userRoutes');
 const maillistRouter = require('./routes/mailingListRoutes');
 const emailRoutes = require('./routes/emailRoutes');
 
-const swaggerUi = require("swagger-ui-express");
-const specs = require("./config/swagger");
+
 //middleware
-app.use(express.json());
-app.use(expressMongoSanitize());
 app.use(helmet());
+app.use(express.json());
+//sanitation middlewares
+app.use(expressMongoSanitize());
+app.use(xss());
+app.use(hpp({
+  whitelist: ['']
+}));
+
 
 app.use(
   cors({
@@ -51,7 +59,7 @@ app.get('/single',function(req,res) {
   console.log('single file');
    
   // Download function provided by express
-  res.download('volunteers-CV/Rotemh123@gmail.com-CV.pdf', function(err) {
+  res.download('volunteers-CV/rotemh123@gmail.com-CV.pdf', function(err) {
       if(err) {
           console.log(err);
       }
