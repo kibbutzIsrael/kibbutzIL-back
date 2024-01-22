@@ -35,12 +35,12 @@ function setupEmailScheduler() {
 }
 
 // Function to send a test email
-function sendTestEmail() {
+function sendEmail(fromMail, toMail, subject, mailBody) {
   const mailOptions = {
-    from: "kibbutz-il@gmail.com",
-    to: "shahar@gmail.com",
-    subject: "I would like to test this",
-    text: "This is a test email from the email sending.",
+    from: fromMail,
+    to: toMail,
+    subject: subject,
+    text: mailBody,
   };
 
   return new Promise((resolve, reject) => {
@@ -49,11 +49,10 @@ function sendTestEmail() {
         console.error("Error sending test email:", error);
         reject(error);
       } else {
-        console.log("Test email sent:", info.response);
         resolve(info);
       }
     });
   });
 }
 
-module.exports = { setupEmailScheduler, sendTestEmail };
+module.exports = { setupEmailScheduler, sendEmail };
