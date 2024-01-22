@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
+const validator = require('validator');
 
 const contactFormSchema = new mongoose.Schema({
     contactName: {
         type: String,
-        required: true
+        required: true,
+        minlength: 2
     },
     contactEmail: {
         type: String,
-        required: true
+        required: true,
+        validate: [validator.isEmail, 'Not a valid Email address']
     },
     contactMessageBody: {
         type: String,
-        required: true
+        required: true,
+        minlength: 2
     }
 });
 

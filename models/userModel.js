@@ -4,13 +4,20 @@ const bcrypt = require('bcryptjs');
 
 const userScheme = new mongoose.Schema({
 
-    fullName: {
+    firstName: {
         type: String,
-        required: [true, 'no Username']
+        required: [true, 'no first name provided'],
+        minlength: 2
+    },
+    lastName: {
+        type: String,
+        required: [true, 'no last name provided'],
+        minlength: 2
     },
     email: {
         type: String,
         required: [true, 'no email'],
+        lowercase: true,
         unique: true,
         validate: [validator.isEmail, 'Not a valid email']
     },
@@ -39,7 +46,13 @@ const userScheme = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
-        required: [true, 'No phone number']
+        required: [true, 'No phone number'],
+        validate: {
+            validator: function(v) {
+              return /^0\d{8,9}$/.test(v);
+            },
+            message: props => `${props.value} is not a valid phone number!`
+          }
     },
     gender: {
         type: String
