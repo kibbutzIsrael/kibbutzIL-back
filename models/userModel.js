@@ -8,10 +8,10 @@ const userScheme = new mongoose.Schema({
         type: String,
         required: [true, 'no Username']
     },
-
     email: {
         type: String,
         required: [true, 'no email'],
+        unique: true,
         validate: [validator.isEmail, 'Not a valid email']
     },
     role: {
@@ -38,7 +38,7 @@ const userScheme = new mongoose.Schema({
         type: String
     },
     phoneNumber: {
-        type: Number,
+        type: String,
         required: [true, 'No phone number']
     },
     gender: {
