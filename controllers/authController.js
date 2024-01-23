@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const passwordsUtils = require('../utils/passwordsUtils');
+const emailSender = require('../utils/emailSender');
 
 
 //sign JWT token
@@ -33,7 +35,8 @@ const createSendToken = (user, statusCode, res) => {
 //signup new user and response JWT token signed for it as cookie
 exports.signup = catchAsync( async (req, res, next) => {
     const newUser = await User.create({
-        fullName: req.body.fullName,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
         password: req.body.password,
         passwordConfirm: req.body.passwordConfirm,
@@ -48,6 +51,63 @@ exports.signup = catchAsync( async (req, res, next) => {
     });
     createSendToken(newUser,201,res);
 });
+
+exports.signupByAdmin = async (req, res, next) => {
+    try {
+        let pwd = passwordsUtils.generateRandomPassword();
+        const newUser = await User.create({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            password: pwd,
+            passwordConfirm: pwd,
+            role: req.body.role,
+            location: req.body.location,
+            phoneNumber: req.body.phoneNumber,
+            gender: req.body.gender,
+            positionUntilNow: req.body.positionUntilNow,
+            targetPosition: req.body.targetPosition,
+            yearExperience: req.body.yearExperience,
+            linkdin: req.body.linkdin
+        });
+
+        let subject = "Welcome to Kibbutz-IL - Your Account Details";
+        let name = `${req.body.firstName} ${req.body.lastName}`;
+        let body = `
+        Dear ${name},
+        
+        Welcome to Kibbutz-IL!
+        
+        Your account is ready:
+        
+        Email: ${req.body.email}
+        Password: ${pwd}
+        
+        Keep your password secure. Log in now.
+        
+        For help, contact us at https://kibbutzil-homepage.web.app/.
+        
+        Thanks for joining us!
+        
+        Best regards,
+        The Kibbutz-IL Team`
+
+        emailSender.sendEmail(process.env.Domain_Email, req.body.email, subject, body);
+
+        res.status(201).json({
+            status: 'success',
+            data: {
+                newUser
+            }
+        });
+    } catch (err) {
+        res.status(400).json({
+            status: 'error',
+            message: 'An error occurred during user creation. Please try again later.'
+        });
+    }
+};
+
 
 //user login
 exports.login = catchAsync( async (req, res, next) =>{ 
@@ -104,7 +164,6 @@ exports.protect = catchAsync( async (req, res, next) => {
 //resricts routes to admin user only
 exports.resrictTo = (...roles) =>{
     return(req, res, next) =>{
-        console.log(req.user.role);
         if(!roles.includes(req.user.role)){
             return next(new AppError('no premission', 403));
         }

@@ -1,10 +1,10 @@
-const Contact = require("../models/contactModel");
+const ContactForm = require("../models/contactFormModel");
 
 const contactController = {
   // GET method to retrieve all contacts
   async getAllContacts(req, res) {
     try {
-      const contacts = await Contact.find();
+      const contacts = await ContactForm.find();
       res.status(200).json(contacts);
     } catch (error) {
       res.status(500).json({ message: error.message });
@@ -14,7 +14,7 @@ const contactController = {
   // GET method to retrieve a contact by ID
   async getContactById(req, res) {
     try {
-      const contact = await Contact.findById(req.params.id);
+      const contact = await ContactForm.findById(req.params.id);
       if (contact) {
         res.status(200).json(contact);
       } else {
@@ -27,7 +27,7 @@ const contactController = {
 
   // POST method to create a new contact
   async createContact(req, res) {
-    const contact = new Contact({
+    const contact = new ContactForm({
       contactName: req.body.contactName,
       contactEmail: req.body.contactEmail,
       contactMessageBody: req.body.contactMessageBody,
@@ -44,7 +44,7 @@ const contactController = {
   // PUT method to update a contact
   async updateContact(req, res) {
     try {
-      const contact = await Contact.findById(req.params.id);
+      const contact = await ContactForm.findById(req.params.id);
       if (!contact) {
         return res.status(404).json({ message: "Contact not found" });
       }
@@ -63,7 +63,7 @@ const contactController = {
   // DELETE method to delete a contact
   async deleteContact(req, res) {
     try {
-      const result = await Contact.findByIdAndDelete(req.params.id);
+      const result = await ContactForm.findByIdAndDelete(req.params.id);
 
       if (result) {
         res.status(200).json({ message: "Contact deleted successfully" });

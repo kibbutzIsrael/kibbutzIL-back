@@ -1,22 +1,30 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mailingListController = require('../controllers/mailingListController'); 
+const contactFormController = require("../controllers/contactFormController");
 const authController = require('../controllers/authController');
 
 /**
  * @swagger
  * tags:
- *   name: Mailing
+ *   name: Contacts
  * components:
  *   schemas:
- *     MailingList:
+ *     Contact:
  *       required:
- *         - email
+ *         - contactName
+ *         - contactEmail
+ *         - contactMessageBody
  *       properties:
- *         email:
+ *         contactName:
+ *           type: string
+ *         contactEmail:
+ *           type: string
+ *         contactMessageBody:
  *           type: string
  *       example:
- *         email: volunteer@email.com
+ *         contactName: Volunteer's Name
+ *         contactEmail: Volunteer@email.com
+ *         contactMessageBody: Hi, Volunteer!
  *
  *     ServerMessage:
  *       required:
@@ -28,121 +36,120 @@ const authController = require('../controllers/authController');
 
 /**
  * @swagger
- * /mailingList:
+ * /contacts:
  *   get:
- *     summary: GET all mails
- *     tags: [Mailing]
+ *     summary: GET all contacts
+ *     tags: [Contacts]
  *     responses:
  *       200:
- *         description: The list of the mails
+ *         description: The list of the contacts
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/MailingList'
+ *                 $ref: '#/components/schemas/Contact'
  *       500:
- *          description: The list of the emails is not found
+ *          description: The list of the contacts is not found
  *          content:
  *           application/json:
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/', mailingListController.getAllMails);
-router.get('/getlistmails', mailingListController.getListMails);
+router.get("/", contactFormController.getAllContacts);
 
 /**
  * @swagger
- *  /mailingList/{id}:
+ *  /contacts/{id}:
  *   get:
- *     summary: GET an mail by ID
- *     tags: [Mailing]
+ *     summary: GET the contact by id
+ *     tags: [Contacts]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The email id
+ *         description: The contact id
  *     responses:
  *       200:
- *         description: The email response by id
+ *         description: The contact response by id
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MailingList'
+ *               $ref: '#/components/schemas/Contact'
  *       404:
- *         description: The email was not found
+ *         description: The contact was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  * 
  *       500:
- *         description: The email is not found
+ *         description: The contact is not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/:id', mailingListController.getMailById);
+router.get("/:id", contactFormController.getContactById);
 
 /**
  * @swagger
- * /mailingList:
+ * /contacts:
  *   post:
- *     summary: POST a new mail
- *     tags: [Mailing]
+ *     summary: ADD new contact
+ *     tags: [Contacts]
  *     requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/MailingList'
+ *            $ref: '#/components/schemas/Contact'
  *     responses:
  *       201:
- *         description: The email is created
+ *         description: The contact is created
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/MailingList'
+ *               $ref: '#/components/schemas/Contact'
  *       400:
- *         description: The email is not created
+ *         description: The contact is not created
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.post('/', mailingListController.addMail);
+router.post("/", contactFormController.createContact);
 
 /**
  * @swagger
- * /mailingList/{id}:
+ * /contacts/{id}:
  *   put:
- *    summary: PUT (update) an mail by ID
-*    tags: [Mailing]
+ *    summary: PUT (update) a contact by ID
+ *    tags: [Contacts]
  *    parameters:
  *      - in: path
  *        name: id
  *        schema:
  *          type: string
  *        required: true
- *        description: The email id
+ *        description: The Contact id
  *    requestBody:
  *      required: true
  *      content:
  *       application/json:
  *          schema:
- *            $ref: '#/components/schemas/MailingList'
+ *            $ref: '#/components/schemas/Contact'
  *    responses:
  *      200:
- *        description: The email was updated
+ *        description: The contact was updated
  *        content:
  *          application/json:
  *             schema:
- *               $ref: '#/components/schemas/MailingList'
+ *               $ref: '#/components/schemas/Contact'
  *      400:
- *        description: The email was not found
+ *        description: The contact was not found
  *        content:
  *           application/json:
  *             schema:
@@ -154,43 +161,42 @@ router.post('/', mailingListController.addMail);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.put('/:id',authController.protect, authController.resrictTo('admin'), mailingListController.updateMail);
-
+router.put("/:id",authController.protect, authController.resrictTo('admin'), contactFormController.updateContact);
 
 /**
  * @swagger
- * /mailingList/{id}:
+ * /contacts/{id}:
  *  delete:
- *     summary: DELETE an mail by ID
- *     tags: [Mailing]
+ *     summary: DELETE a contact by ID
+ *     tags: [Contacts]
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The email id
+ *         description: The contact id
  *
  *     responses:
  *       200:
- *         description: The email was deleted
+ *         description: The contact was deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       404:
- *         description: The email was not found
+ *         description: The contact was not found
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  *       500:
- *         description: The email is not deleted
+ *         description: The contact is not deleted
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.delete('/:id',authController.protect, authController.resrictTo('admin'), mailingListController.deleteMail);
+router.delete("/:id",authController.protect, authController.resrictTo('admin'), contactFormController.deleteContact);
 
 module.exports = router;
