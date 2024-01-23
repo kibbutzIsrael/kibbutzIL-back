@@ -9,7 +9,7 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 const allowedOrigins = [
-  "https://localhost:3001",
+  "http://localhost:3001",
   "localhost:3001",
   "https://kibbutzil-homepage.web.app",
   "kibbutzil-homepage.web.app",

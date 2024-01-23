@@ -32,7 +32,16 @@ const volunteerFormSchema = new mongoose.Schema({
   CVfile: Buffer,
   linkedin: {
     type: String,
-    validate: [validator.isURL, "Not a valid URL"],
+    required: false,
+    validate: {
+      validator: function (v) {
+        // If the value (v) is empty, consider it valid (return true)
+        if (!v) return true;
+        // If the value is not empty, perform URL validation
+        return validator.isURL(v);
+      },
+      message: "Not a valid URL",
+    },
   },
 });
 
