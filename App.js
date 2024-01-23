@@ -8,7 +8,12 @@ const specs = require("./config/swagger");
 const xss = require("xss-clean");
 const hpp = require("hpp");
 
-const allowedOrigins = ["http://localhost:3001", "https://localhost:3001"];
+const allowedOrigins = [
+  "https://localhost:3001",
+  "localhost:3001",
+  "https://kibbutzil-homepage.web.app",
+  "kibbutzil-homepage.web.app",
+];
 
 //routers
 const organizationFormRoutes = require("./routes/organizationFormRoutes");
