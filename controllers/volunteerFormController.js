@@ -52,6 +52,14 @@ exports.getVolunteerById = async (req, res) => {
 
 // POST method to create a new volunteer
 exports.createVolunteer = async (req, res) => {
+  const checkVolunteer = await VolunteerForm.findOne({ email: req.body.email });
+
+  if (checkVolunteer) {
+    // If a volunteer with the given email already exists, return an error
+    return res
+      .status(400)
+      .json({ message: "Volunteer with this email already exists" });
+  }
   const volunteer = new VolunteerForm(req.body);
 
   try {
@@ -70,15 +78,15 @@ exports.updateVolunteer = async (req, res) => {
       return res.status(404).json({ message: "Volunteer not found" });
     }
 
-      volunteer.fullName = req.body.fullName;
-      volunteer.email = req.body.email;
-      volunteer.location = req.body.location;
-      volunteer.phoneNumber = req.body.phoneNumber;
-      volunteer.gender = req.body.gender;
-      volunteer.positionAntilNow = req.body.positionAntilNow;
-      volunteer.fecerPosition = req.body.fecerPosition;
-      volunteer.yearExperience = req.body.yearExperience;
-      volunteer.CVfile = `${req.body.email}-CV.pdf`;
+    volunteer.fullName = req.body.fullName;
+    volunteer.email = req.body.email;
+    volunteer.location = req.body.location;
+    volunteer.phoneNumber = req.body.phoneNumber;
+    volunteer.gender = req.body.gender;
+    volunteer.positionAntilNow = req.body.positionAntilNow;
+    volunteer.fecerPosition = req.body.fecerPosition;
+    volunteer.yearExperience = req.body.yearExperience;
+    volunteer.CVfile = `${req.body.email}-CV.pdf`;
 
     const updatedVolunteer = await volunteer.save();
     res.status(200).json(updatedVolunteer);
