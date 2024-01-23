@@ -27,14 +27,7 @@ const organizationController = {
 
   // POST method to create a new organization
   async createOrganization(req, res) {
-    const organization = new OrganizationForm({
-      organizationName: req.body.organizationName,
-      organizationPhoneNumber: req.body.organizationPhoneNumber,
-      organizationContactName: req.body.organizationContactName,
-      organizationEmail: req.body.organizationEmail,
-      organizationMessageBody: req.body.organizationMessageBody,
-      organizationType: req.body.organizationType,
-    });
+    const organization = new OrganizationForm(req.body);
 
     try {
       const newOrganization = await organization.save();
