@@ -37,6 +37,8 @@ services:
     - mongo-db:/data/db
    restart: always
       
+  redis:
+   image: redis
 
 volumes:
  mongo-db:
