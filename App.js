@@ -11,6 +11,8 @@ const hpp = require("hpp");
 const allowedOrigins = [
   "http://localhost:3001",
   "localhost:3001",
+  "http://localhost:3000",
+  "localhost:3000",
   "https://kibbutzil-homepage.web.app",
   "kibbutzil-homepage.web.app",
 ];
