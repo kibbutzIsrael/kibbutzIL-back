@@ -13,4 +13,3 @@ services:
     - SESSION_SECRET=secret
    command: npm run dev
   
-  
