@@ -11,5 +11,12 @@ services:
    environment: 
     - NODE_ENV=develpment
     - SESSION_SECRET=secret
+    - NODE_ENV=develpment
+    - SESSION_SECRET=secret
+    - DATABASE=mongodb://1223d:<password>@mongo:27017/?authSource=admin
+    - DB_PASSWORD=1223d
+    - JWT_SECRET=this-will-prevent-3rd-party-iranian-hackers-from-getting-premission-to-hack-us
+    - JWT_EXPIRES_IN=90d
+    - JWT_COOKIE_EXPIRES_IN=90
    command: npm run dev
   
