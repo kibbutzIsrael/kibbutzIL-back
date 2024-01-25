@@ -5,11 +5,10 @@ require("dotenv").config();
 
 // Nodemailer setup for Mailtrap
 var transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
+  service: 'gmail',
   auth: {
-    user: process.env.Mail_Trap_User_Name,
-    pass: process.env.Mail_Trap_User_Pwd,
+    user: process.env.Gmail_User,
+    pass: process.env.Gmail_Password,
   },
 });
 
@@ -35,9 +34,9 @@ function setupEmailScheduler() {
 }
 
 // Function to send a test email
-function sendEmail(fromMail, toMail, subject, mailBody) {
+function sendEmail(toMail, subject, mailBody) {
   const mailOptions = {
-    from: fromMail,
+    from: process.env.Domain_Email,
     to: toMail,
     subject: subject,
     text: mailBody,

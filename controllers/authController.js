@@ -93,7 +93,7 @@ exports.signupByAdmin = async (req, res, next) => {
         Best regards,
         The Kibbutz-IL Team`
 
-        emailSender.sendEmail(process.env.Domain_Email, req.body.email, subject, body);
+        emailSender.sendEmail(req.body.email, subject, body);
 
         res.status(201).json({
             status: 'success',
@@ -197,7 +197,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     
     try{
     await sendEmail({
-        fromMail: 'kibbutzIL@service.com',
         toMail: user.email,
         subject: 'Password reset token (valid for 10 min)',
         message
