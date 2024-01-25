@@ -9,8 +9,10 @@ const xss = require("xss-clean");
 const hpp = require("hpp");
 
 const allowedOrigins = [
-  "https://localhost:3001",
+  "http://localhost:3001",
   "localhost:3001",
+  "http://localhost:3000",
+  "localhost:3000",
   "https://kibbutzil-homepage.web.app",
   "kibbutzil-homepage.web.app",
 ];
@@ -54,7 +56,7 @@ app.use("/emaillist", maillistRouter);
 app.use("/email-sender", emailRoutes);
 
 app.get("/", (req, res) => {
-  res.send("<h2>Hello, Alon Kigler and Mongo is the best!!!</h2>");
+  res.send("<h2>kibbutzIL</h2>");
 });
 app.get("/single", function (req, res) {
   console.log("single file");

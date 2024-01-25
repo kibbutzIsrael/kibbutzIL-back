@@ -21,7 +21,6 @@ services:
       - "3000:3000"
     environment:
       - PORT=3000
-
     depends_on:
       - mongo
     restart: always
@@ -29,8 +28,6 @@ services:
   
   mongo:
    image: mongo
-   ports: 
-      - 27017:27017 
    environment:
     -MONGO_INITDB_ROOT_USERNAME: 1223d
     -MONGO_INITDB_ROOT_PASSWORD: 1223d
@@ -38,6 +35,8 @@ services:
     - mongo-db:/data/db
    restart: always
       
+  redis:
+   image: redis
 
 volumes:
  mongo-db:
