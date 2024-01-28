@@ -74,6 +74,22 @@ const contactController = {
       res.status(500).json({ message: error.message });
     }
   },
+
+  async getContactByMail(req, res) {
+    try {
+      const contact = await ContactForm.findOne({contactEmail: req.params.contactEmail});
+      if (!contact) {
+        return res.status(404).json({ message: "Contact not found" });
+      }
+      res.status(200).json({
+        status: 'success',
+        data: contact
+      })
+    }
+    catch (err){
+      res.status(500).json({message: err.message});
+    }
+  },
 };
 
 module.exports = contactController;

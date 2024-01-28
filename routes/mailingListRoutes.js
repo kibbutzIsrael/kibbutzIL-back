@@ -53,6 +53,9 @@ router.get("/getlistmails", mailingListController.getListMails);
 
 router.get("/:id", mailingListController.getMailById);
 
+
+router.get("/bymail/:email", mailingListController.getListEmailByMail);
+
 router.post("/", mailingListController.addMail);
 
 router.put(

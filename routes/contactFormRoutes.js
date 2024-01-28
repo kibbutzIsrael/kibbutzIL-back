@@ -94,6 +94,9 @@ router.get("/", contactFormController.getAllContacts);
  */
 router.get("/:id", contactFormController.getContactById);
 
+//get contact by mail
+router.get('/bymail/:contactEmail', contactFormController.getContactByMail);
+
 /**
  * @swagger
  * /contacts:

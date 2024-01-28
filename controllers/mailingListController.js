@@ -85,6 +85,23 @@ const mailingListController = {
       res.status(500).json({ message: error.message });
     }
   },
+
+  //get object by mail
+  async getListEmailByMail(req, res) {
+    try {
+      const listMail = await MailingList.findOne({email: req.params.email});
+      if (!listMail) {
+        return res.status(404).json({ message: "email not found" });
+      }
+      res.status(200).json({
+        status: 'success',
+        data: listMail
+      })
+    }
+    catch (err){
+      res.status(500).json({message: err.message});
+    }
+  },
 };
 
 module.exports= mailingListController;
