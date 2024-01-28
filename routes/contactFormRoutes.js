@@ -56,7 +56,7 @@ const authController = require('../controllers/authController');
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get("/", contactFormController.getAllContacts);
+router.get("/",authController.protect ,contactFormController.getAllContacts);
 
 /**
  * @swagger
@@ -92,10 +92,10 @@ router.get("/", contactFormController.getAllContacts);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get("/:id", contactFormController.getContactById);
+router.get("/:id",authController.protect ,contactFormController.getContactById);
 
 //get contact by mail
-router.get('/bymail/:contactEmail', contactFormController.getContactByMail);
+router.get('/bymail/:contactEmail',authController.protect ,contactFormController.getContactByMail);
 
 /**
  * @swagger

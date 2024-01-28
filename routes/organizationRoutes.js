@@ -13,9 +13,9 @@ router.put('/:id', authController.protect, authController.resrictTo('admin'), or
 router.delete('/:id', authController.protect, authController.resrictTo('admin'), organizationController.remove);
 
 // Route to get all organizations
-router.get('/', organizationController.getAll);
+router.get('/',authController.protect ,organizationController.getAll);
 
 // Route to get an organization by ID
-router.get('/:id', organizationController.getById);
+router.get('/:id',authController.protect ,organizationController.getById);
 
 module.exports = router;

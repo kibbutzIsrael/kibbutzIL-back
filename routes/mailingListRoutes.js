@@ -48,13 +48,13 @@ const authController = require("../controllers/authController");
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get("/", mailingListController.getAllMails);
-router.get("/getlistmails", mailingListController.getListMails);
+router.get("/",authController.protect , mailingListController.getAllMails);
+router.get("/getlistmails",authController.protect , mailingListController.getListMails);
 
-router.get("/:id", mailingListController.getMailById);
+router.get("/:id",authController.protect , mailingListController.getMailById);
 
 
-router.get("/bymail/:email", mailingListController.getListEmailByMail);
+router.get("/bymail/:email",authController.protect , mailingListController.getListEmailByMail);
 
 router.post("/", mailingListController.addMail);
 

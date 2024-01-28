@@ -68,7 +68,7 @@ const authController = require('../controllers/authController');
  *             schema:
  *                $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/', organizationFormController.getAllOrganizations);
+router.get('/',authController.protect ,organizationFormController.getAllOrganizations);
 
 /**
  * @swagger
@@ -104,7 +104,7 @@ router.get('/', organizationFormController.getAllOrganizations);
  *             schema:
  *               $ref: '#/components/schemas/ServerMessage'
  */
-router.get('/:id', organizationFormController.getOrganizationById);
+router.get('/:id',authController.protect ,organizationFormController.getOrganizationById);
 
 /**
  * @swagger
