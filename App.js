@@ -15,6 +15,8 @@ const allowedOrigins = [
   "localhost:3000",
   "https://kibbutzil-homepage.web.app",
   "kibbutzil-homepage.web.app",
+  "https://kibbutzil.com",
+  "kibbutzil.com",
 ];
 
 //routers
