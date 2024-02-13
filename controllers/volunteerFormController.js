@@ -126,3 +126,48 @@ exports.getVolunteerCVById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+// ... (your imports and schema definition)
+
+// ... (your imports and schema definition)
+
+exports.getVolunteerFormByFilters = async (req, res) => {
+  try {
+    const { email, phoneNumber, positionUntilNow, sortOrder, yearExperience } =
+      req.body;
+
+    // Build the filter object based on provided parameters
+    const filters = {};
+    if (email) {
+      filters.email = email;
+    }
+    if (phoneNumber) {
+      filters.phoneNumber = phoneNumber;
+    }
+    if (positionUntilNow) {
+      filters.positionUntilNow = positionUntilNow;
+    }
+
+    // Build the sort object based on sortOrder
+    const sort = {};
+    if (sortOrder === "Name-A-B") {
+      sort.fullName = 1; // Sort by name, A to B
+    } else if (sortOrder === "Name-B-A") {
+      sort.fullName = -1; // Sort by name, B to A
+    } else if (sortOrder === "Newest") {
+      sort.createdAt = -1; // Sort by creation date, newest to oldest
+    } else if (sortOrder === "yearExperience-1-9") {
+      sort.yearExperience = 1;
+    } else if (sortOrder === "yearExperience-9-1") {
+      sort.yearExperience = -1;
+    }
+
+    const volunteers = await VolunteerForm.find(filters).sort(sort);
+
+    res.status(200).json(volunteers);
+  } catch (error) {
+    // Handle errors
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
