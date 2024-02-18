@@ -17,6 +17,8 @@ const allowedOrigins = [
   "kibbutzil-homepage.web.app",
   "https://kibbutzil.com",
   "kibbutzil.com",
+  "https://kibbutz-adminapp.web.app/react/demo/login",
+  "kibbutz-adminapp.web.app/react/demo/login"
 ];
 
 //routers
