@@ -47,6 +47,9 @@ const volunteerFormSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+  },
 });
 
 const VolunteerForm = mongoose.model("VolunteerForm", volunteerFormSchema);

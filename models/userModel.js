@@ -77,6 +77,9 @@ const userScheme = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+  },
 });
 
 //encrypt pass in db

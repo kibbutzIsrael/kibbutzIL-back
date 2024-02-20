@@ -38,6 +38,9 @@ const organizationSchema = new mongoose.Schema({
     default: Date.now,
   },
   organizationType: String,
+  status: {
+    type: String,
+  },
 });
 
 const Organization = mongoose.model("Organization", organizationSchema);

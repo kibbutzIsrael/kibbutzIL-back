@@ -21,6 +21,9 @@ const contactFormSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+  },
 });
 
 const ContactForm = mongoose.model("ContactForm", contactFormSchema);
