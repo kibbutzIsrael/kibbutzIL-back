@@ -11,16 +11,12 @@ const filterObj = (obj, ...allowedFields) => {
 };
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const users = await User.find();
-
-  // SEND RESPONSE
-  res.status(200).json({
-    status: "success",
-    results: users.length,
-    data: {
-      users,
-    },
-  });
+  try {
+    const users = await User.find();
+    res.status(200).json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 });
 
 exports.updateMe = catchAsync(async (req, res, next) => {
@@ -74,17 +70,35 @@ exports.createUser = (req, res) => {
     message: "This route is not yet defined!",
   });
 };
-exports.updateUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
-  });
+
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      return res.status(404).json({ message: "user not found" });
+    }
+
+    // Update the organization fields
+    Object.assign(user, req.body);
+    const updatedUser = await user.save();
+    res.status(200).json(updatedUser);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
 };
-exports.deleteUser = (req, res) => {
-  res.status(500).json({
-    status: "error",
-    message: "This route is not yet defined!",
-  });
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const result = await User.findByIdAndDelete(req.params.id);
+
+    if (result) {
+      res.status(200).json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
 };
 
 exports.getUserByFilters = async (req, res) => {
