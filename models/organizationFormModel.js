@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const validator = require('validator'); 
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 const organizationFormSchema = new mongoose.Schema({
   organizationName: {
@@ -35,6 +35,10 @@ const organizationFormSchema = new mongoose.Schema({
   },
   organizationType: {
     type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

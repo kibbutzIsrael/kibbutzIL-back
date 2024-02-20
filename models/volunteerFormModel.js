@@ -43,6 +43,10 @@ const volunteerFormSchema = new mongoose.Schema({
       message: "Not a valid URL",
     },
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 const VolunteerForm = mongoose.model("VolunteerForm", volunteerFormSchema);
