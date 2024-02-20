@@ -21,9 +21,11 @@ router
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
-// router.post("/filters"),
-//   get(userController.getUser)
-//     .patch(userController.updateUser)
-//     .delete(userController.getUserByFilters);
+router.get(
+  "/filters",
+  //   authController.protect,
+  //   authController.resrictTo("admin"),
+  userController.getUserByFilters
+);
 
 module.exports = router;

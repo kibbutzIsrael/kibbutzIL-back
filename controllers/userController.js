@@ -88,51 +88,38 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.getUserByFilters = async (req, res) => {
-  // console.log("dd");
-  // try {
-  //   const {
-  //     minPrice,
-  //     maxPrice,
-  //     ttcategory,
-  //     category,
-  //     size,
-  //     color,
-  //     sortOrder,
-  //   } = req.body;
-  //   const minPriceNumber = parseInt(minPrice, 10) || 0;
-  //   const maxPriceNumber = parseInt(maxPrice, 10) || 0;
-  //   console.log("dd", minPriceNumber);
-  //   console.log("dd", minPriceNumber);
-  //   // Build the filter object based on provided parameters
-  //   const filters = {};
-  //   if (minPriceNumber && maxPriceNumber) {
-  //     filters.price = { $gte: minPrice, $lte: maxPrice };
-  //   }
-  //   if (ttcategory && Array.isArray(ttcategory) && ttcategory.length > 0) {
-  //     filters.ttcategory = { $in: ttcategory };
-  //   }
-  //   if (category) {
-  //     filters.category = category;
-  //   }
-  //   if (size) {
-  //     filters.size = size;
-  //   }
-  //   if (color) {
-  //     filters.color = color;
-  //   }
-  //   // Build the sort object based on sortOrder
-  //   const sort = {};
-  //   if (sortOrder === "Price-low-hight") {
-  //     sort.price = 1; // Sort by price, low to high
-  //   } else if (sortOrder === "Price-hight-low") {
-  //     sort.price = -1; // Sort by price, high to low
-  //   } else if (sortOrder === "Newest") {
-  //     sort.createdAt = -1; // Sort by creation date, newest to oldest
-  //   }
-  //   const products = await Product.find(filters).sort(sort);
-  //   res.json(products);
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: "Server error" });
-  // }
+  try {
+    let query = {};
+
+    // If there is a query for email, phoneNumber, or firstName
+    if (req.query.email) {
+      query.email = req.query.email;
+    }
+    if (req.query.phoneNumber) {
+      query.phoneNumber = req.query.phoneNumber;
+    }
+    if (req.query.firstName) {
+      query.firstName = req.query.firstName;
+    }
+
+    let sortQuery = {};
+
+    // Sorting logic based on sortBy and sortOrder
+    if (req.query.sortBy) {
+      if (req.query.sortOrder === "asc") {
+        sortQuery[req.query.sortBy] = 1;
+      } else if (req.query.sortOrder === "desc") {
+        sortQuery[req.query.sortBy] = -1;
+      }
+    } else {
+      // Default sorting by createdAt if no sorting query provided
+      sortQuery.createdAt = 1;
+    }
+
+    const users = await User.find(query).sort(sortQuery);
+    res.json(users);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
